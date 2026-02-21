@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>J-dieux | Père et fils | Élagage à Béthune</title>
+  <meta name="description" content="J-dieux Père et fils : élagage, taille, abattage, entretien jardin à Béthune et alentours. Devis rapide, intervention locale." />
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root{
+      --bg:#fbfaf6;         /* blanc cassé */
+      --paper:#ffffff;      /* cartes */
+      --text:#1e2a24;       /* vert-noir */
+      --muted:#5d6a63;      /* gris vert */
+      --forest:#1f4b3a;     /* vert forêt */
+      --leaf:#2f7d5a;       /* vert feuille */
+      --sand:#efe7d6;       /* beige doux */
+      --line:rgba(30,42,36,.12);
+      --shadow: 0 10px 30px rgba(30,42,36,.10);
+      --radius: 18px;
+      --max: 1120px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 10% -10%, rgba(47,125,90,.10), transparent 60%),
+        radial-gradient(900px 500px at 100% 10%, rgba(239,231,214,.65), transparent 60%),
+        var(--bg);
+    }
+
+    /* =========================================================
+       ✅ AJOUT: Background image responsive (sans casser le CSS)
+       Tu remplaces juste le chemin dans background-image:url(...)
+       ========================================================= */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-10;
+      background-image:url("image/forêt.png"); /* ex: ./images/bg.jpg */
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+    }
+    /* Voile léger pour garder la lisibilité (optionnel, ajustable) */
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-9;
+      background: rgba(251,250,246,0.75);
+    }
+    /* Ajustement mobile (optionnel) */
+    @media (max-width:520px){
+      body::before{ background-position:50% 30%; }
+    }
+
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:20;
+      background: rgba(251,250,246,.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 0; gap:14px;
+    }
+    .brand{display:flex; gap:12px; align-items:center; text-decoration:none}
+    .mark{
+      width:44px; height:44px; border-radius:14px;
+      background: conic-gradient(from 180deg, var(--forest), var(--leaf), var(--forest));
+      box-shadow: var(--shadow);
+      position:relative;
+    }
+    .mark:after{
+      content:"";
+      position:absolute; inset:9px;
+      border-radius:12px;
+      background: rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.25);
+    }
+    .brand h1{margin:0; font-size:18px; letter-spacing:.2px}
+    .brand small{display:block; margin-top:2px; color:var(--muted); font-weight:650}
+
+    .menu{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .menu a{
+      text-decoration:none; color:var(--muted);
+      font-weight:750; padding:10px 12px; border-radius:12px;
+    }
+    .menu a:hover{background: rgba(31,75,58,.06); color:var(--text)}
+
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 14px; border-radius:14px;
+      text-decoration:none;
+      font-weight:900;
+      border:1px solid rgba(31,75,58,.18);
+      background: rgba(31,75,58,.06);
+    }
+    .btn.primary{
+      color:white;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--forest), var(--leaf));
+      box-shadow: var(--shadow);
+    }
+
+    /* Header right */
+    .navRight{display:flex; align-items:center; gap:10px}
+
+    /* Burger (mobile) */
+    .burger{
+      display:none;
+      width:46px; height:42px;
+      border-radius:14px;
+      border:1px solid rgba(31,75,58,.18);
+      background: rgba(31,75,58,.06);
+      cursor:pointer;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      padding:0;
+    }
+    .burger span{
+      display:block;
+      width:18px;
+      height:2px;
+      background: var(--forest);
+      border-radius:99px;
+      transition: transform .2s ease, opacity .2s ease;
+    }
+    /* Burger -> X when open */
+    .burger.open span:nth-child(1){transform: translateY(8px) rotate(45deg)}
+    .burger.open span:nth-child(2){opacity:0}
+    .burger.open span:nth-child(3){transform: translateY(-8px) rotate(-45deg)}
+
+    /* Mobile menu overlay */
+    .mobileMenu{
+      position:fixed;
+      inset:0;
+      background: rgba(30,42,36,.45);
+      backdrop-filter: blur(6px);
+      display:none;
+      z-index:50;
+    }
+    .mobileMenu.open{display:block}
+
+    .mobilePanel{
+      width:min(420px, 92vw);
+      height:100%;
+      background: var(--paper);
+      border-right:1px solid var(--line);
+      box-shadow: 0 20px 60px rgba(30,42,36,.20);
+      padding:16px;
+      transform: translateX(-8px);
+      animation: slideIn .18s ease forwards;
+    }
+    @keyframes slideIn{
+      from{transform: translateX(-14px); opacity:.6}
+      to{transform: translateX(0); opacity:1}
+    }
+
+    .mobileTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:6px 4px 14px;
+      border-bottom:1px solid var(--line);
+    }
+    .mobileBrand{display:flex; align-items:center; gap:12px}
+    .mobileTitle{font-weight:950; letter-spacing:.2px}
+    .mobileSub{color:var(--muted); font-weight:650; font-size:13px}
+
+    .closeMobile{
+      width:44px; height:44px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(239,231,214,.35);
+      cursor:pointer;
+      font-size:18px;
+      font-weight:900;
+      color: var(--text);
+    }
+
+    .mobileLinks{
+      display:grid;
+      gap:10px;
+      padding:14px 4px;
+    }
+    .mobileLinks a{
+      text-decoration:none;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(31,75,58,.10);
+      background: rgba(31,75,58,.04);
+      font-weight:850;
+      color: var(--text);
+    }
+    .mobileLinks a:hover{background: rgba(31,75,58,.07)}
+    .mobileCta{justify-content:center}
+
+    /* Sections */
+    section{padding:44px 0}
+    .grid{display:grid; gap:18px}
+    .card{
+      background: var(--paper);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    /* Hero */
+    .heroGrid{grid-template-columns: 1.2fr .8fr; align-items:stretch}
+    @media (max-width: 900px){ .heroGrid{grid-template-columns:1fr} }
+
+    .heroLeft{padding:26px}
+    .badgeRow{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px; border-radius:999px;
+      border:1px solid rgba(31,75,58,.18);
+      background: rgba(31,75,58,.06);
+      font-weight:850;
+      color:var(--forest);
+    }
+    .badge .dot{width:10px; height:10px; border-radius:99px; background:var(--leaf)}
+    .badge.alt{
+      color:var(--text);
+      background: rgba(239,231,214,.55);
+      border-color: rgba(30,42,36,.12);
+    }
+
+    .headline{
+      margin:12px 0 10px;
+      font-size:44px;
+      letter-spacing:-.02em;
+      line-height:1.06;
+    }
+    @media (max-width: 520px){ .headline{font-size:36px} }
+    .sub{margin:0; color:var(--muted); line-height:1.65; font-size:16px}
+    .actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+
+    .heroRight{padding:18px}
+    .panel{padding:16px; border-radius:16px; background: rgba(239,231,214,.45); border:1px dashed rgba(30,42,36,.15)}
+    .panel h3{margin:0 0 6px; font-size:16px}
+    .panel p{margin:0; color:var(--muted); line-height:1.55}
+    .ticks{margin:14px 0 0; padding:0; list-style:none; display:grid; gap:10px}
+    .ticks li{display:flex; gap:10px; color:var(--muted); align-items:flex-start}
+    .tick{
+      width:18px; height:18px; border-radius:8px;
+      background: rgba(47,125,90,.12);
+      border:1px solid rgba(47,125,90,.25);
+      display:inline-flex; align-items:center; justify-content:center;
+      font-size:12px; color:var(--forest); font-weight:900;
+      margin-top:2px;
+    }
+
+    /* Titles */
+    .titleRow{display:flex; justify-content:space-between; align-items:flex-end; gap:14px; margin-bottom:14px}
+    h2{margin:0; font-size:26px}
+    .hint{margin:0; color:var(--muted)}
+
+    /* Services */
+    .services{grid-template-columns:repeat(3,1fr)}
+    @media (max-width: 900px){ .services{grid-template-columns:1fr} }
+    .service{padding:18px}
+    .service h3{margin:0 0 8px}
+    .service p{margin:0; color:var(--muted); line-height:1.65}
+    .chip{
+      display:inline-flex; margin-top:12px; padding:6px 10px;
+      border-radius:999px; font-weight:900;
+      border:1px solid rgba(31,75,58,.18);
+      color:var(--forest);
+      background: rgba(31,75,58,.06);
+    }
+
+    /* Map + zone */
+    .mapGrid{grid-template-columns:1fr 1fr}
+    @media (max-width: 900px){ .mapGrid{grid-template-columns:1fr} }
+    .pad{padding:18px}
+    iframe{width:100%; border:0; border-radius:16px; min-height:340px}
+    .zones ul{margin:10px 0 0; padding-left:18px; color:var(--muted); line-height:1.8}
+
+    /* Gallery */
+    .gallery{grid-template-columns:repeat(2,1fr)}
+    @media (max-width: 900px){ .gallery{grid-template-columns:1fr} }
+    .pair{padding:18px}
+    .pair h3{margin:0 0 10px}
+    .ba{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    .ph{border-radius:16px; overflow:hidden; border:1px solid var(--line); background: rgba(239,231,214,.25)}
+    .ph img{display:block; width:100%; height:230px; object-fit:cover}
+    .cap{padding:10px 12px; border-top:1px solid var(--line); color:var(--muted); font-weight:800; display:flex; justify-content:space-between}
+    .pillSmall{
+      font-size:12px; font-weight:900; color:var(--forest);
+      border:1px solid rgba(31,75,58,.18);
+      background: rgba(31,75,58,.06);
+      padding:4px 8px; border-radius:999px;
+    }
+
+    /* Contact */
+    .contactGrid{grid-template-columns:1fr 1fr}
+    @media (max-width: 900px){ .contactGrid{grid-template-columns:1fr} }
+    form{display:grid; gap:10px}
+    .row2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    @media (max-width: 520px){ .row2{grid-template-columns:1fr} }
+    input, textarea, select{
+      width:100%; padding:12px 12px; border-radius:14px;
+      border:1px solid var(--line);
+      background: white;
+      color:var(--text);
+      outline:none;
+    }
+    input:focus, textarea:focus, select:focus{
+      border-color: rgba(47,125,90,.55);
+      box-shadow: 0 0 0 4px rgba(47,125,90,.12);
+    }
+    textarea{min-height:120px; resize:vertical}
+    .note{color:var(--muted); font-size:13px; line-height:1.55}
+    .submit{
+      cursor:pointer;
+      padding:12px 14px;
+      border-radius:14px;
+      border:none;
+      font-weight:950;
+      color:white;
+      background: linear-gradient(135deg, var(--forest), var(--leaf));
+      box-shadow: var(--shadow);
+    }
+
+    /* FAQ */
+    .faq{padding:18px}
+    details{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background: rgba(239,231,214,.28);
+      padding:12px 12px;
+    }
+    details + details{margin-top:10px}
+    summary{cursor:pointer; font-weight:950}
+    details p{color:var(--muted); line-height:1.8; margin:10px 0 0}
+
+    footer{
+      border-top:1px solid var(--line);
+      padding:26px 0 34px;
+      color:var(--muted);
+    }
+
+    /* Responsive: desktop menu off, burger on */
+    @media (max-width: 900px){
+      .menu{display:none}
+      .burger{display:inline-flex}
+    }
+    .mark{
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.mark img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+/* Bandeau défilant footer */
+.tkr{
+  --tkr-bg: rgba(255,255,255,.72);
+  --tkr-border: rgba(0,0,0,.08);
+  --tkr-text: rgba(20,35,25,.92);
+  --tkr-muted: rgba(20,35,25,.40);
+  --tkr-speed: 34s; /* + grand = plus lent */
+  width: 100%;
+  border-top: 1px solid var(--tkr-border);
+  border-bottom: 1px solid var(--tkr-border);
+  background: var(--tkr-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.tkr__mask{
+  overflow: hidden;
+  /* évite que ça “touche” les bords sur mobile */
+  padding: clamp(10px, 1.2vw, 14px) 0;
+}
+
+.tkr__track{
+  display: flex;
+  width: max-content;
+  animation: tkr-move var(--tkr-speed) linear infinite;
+  will-change: transform;
+}
+
+.tkr__row{
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(10px, 1.2vw, 14px);
+  padding: 0 clamp(14px, 3vw, 28px);
+  white-space: nowrap;
+}
+
+.tkr__item{
+  font-size: clamp(12px, 1.2vw, 14px);
+  letter-spacing: .2px;
+  color: var(--tkr-text);
+}
+
+.tkr__dot{
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--tkr-muted);
+  flex: 0 0 auto;
+  opacity: .8;
+}
+
+/* Boucle fluide */
+@keyframes tkr-move{
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Option: pause au survol (desktop) */
+@media (hover:hover){
+  .tkr:hover .tkr__track{ animation-play-state: paused; }
+}
+
+/* Accessibilité: réduire l'animation si demandé */
+@media (prefers-reduced-motion: reduce){
+  .tkr__track{ animation: none; }
+  .tkr__mask{ overflow: auto; }
+  .tkr__row{ padding-left: 18px; padding-right: 18px; }
+}
+  </style>
+</head>
+
+<body>
+  <header>
+    <!-- Bandeau infos (footer) -->
+<div class="tkr" role="region" aria-label="Informations importantes">
+  <div class="tkr__mask">
+    <div class="tkr__track" aria-hidden="true">
+      <div class="tkr__row">
+        <span class="tkr__item">📍 Intervention Béthune + 30 km</span>
+        <span class="tkr__dot" aria-hidden="true"></span>
+
+        <span class="tkr__item">✅ Devis gratuit</span>
+        <span class="tkr__dot" aria-hidden="true"></span>
+
+        <span class="tkr__item">🛡️ Propreté chantier garanti </span>
+        <span class="tkr__dot" aria-hidden="true"></span>
+
+        <span class="tkr__item">🌿 Taille raisonnée, taille préventive</span>
+        <span class="tkr__dot" aria-hidden="true"></span>
+
+        <span class="tkr__item">🕘 Lun–Sam 8h–19h</span>
+        <span class="tkr__dot" aria-hidden="true"></span>
+
+        <span class="tkr__item">📞06.12.62.46.90</span>
+      </div>
+
+      <!-- Copie identique pour boucle infinie fluide -->
+      <div class="tkr__row">
+        <span class="tkr__item">📍 Intervention Béthune + 30 km</span>
+        <span class="tkr__dot" aria-hidden="true"></span>
+
+        <span class="tkr__item">✅ Devis gratuit</span>
+        <span class="tkr__dot" aria-hidden="true"></span>
+
+        <span class="tkr__item">🛡️ Propreté chantier garanti</span>
+        <span class="tkr__dot" aria-hidden="true"></span>
+
+        <span class="tkr__item">🌿 Taille raisonnée, taille préventive</span>
+        <span class="tkr__dot" aria-hidden="true"></span>
+
+        <span class="tkr__item">🕘 Lun–Sam 8h–19h</span>
+        <span class="tkr__dot" aria-hidden="true"></span>
+
+        <span class="tkr__item">📞06.12.62.46.90</span>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="Accueil J-dieux">
+      <div class="mark" aria-hidden="true">
+  <img src="image/logo.png" alt="">
+</div>
+
+<div>
+  <h1>J-dieux</h1>
+  <small>Père et fils</small>
+</div>
+
+      <nav class="menu" aria-label="Menu">
+        <a href="#services">Services</a>
+        <a href="#zone">Zone d’action</a>
+        <a href="#galerie">Avant / Après</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="navRight">
+        <a class="btn primary" href="#devis">Demander un devis</a>
+
+        <button class="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Menu mobile -->
+  <div class="mobileMenu" id="mobileMenu" aria-hidden="true">
+    <div class="mobilePanel">
+      <div class="mobileTop">
+        <div class="mobileBrand">
+          <div class="mark" aria-hidden="true"></div>
+          <div>
+            <div class="mobileTitle">J-dieux</div>
+            <div class="mobileSub">Père et fils</div>
+          </div>
+        </div>
+
+        <button class="closeMobile" type="button" aria-label="Fermer le menu">✕</button>
+      </div>
+
+      <nav class="mobileLinks" aria-label="Menu mobile">
+        <a href="#services">Services</a>
+        <a href="#zone">Zone d’action</a>
+        <a href="#galerie">Avant / Après</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn primary mobileCta" href="#devis">Demander un devis</a>
+      </nav>
+    </div>
+  </div>
+
+  <main id="top">
+    <!-- HERO -->
+    <section>
+      <div class="wrap grid heroGrid">
+        <div class="card heroLeft">
+          <div class="badgeRow">
+  <div class="badge"><span class="dot"></span> Béthune</div>
+  <div class="badge alt">Élagage • Entretien jardin • Local</div>
+
+  <a class="badge phone" href="tel:+33612624690" aria-label="Appeler le 06 12 62 46 90">
+    <span class="dot"></span> 06.12.62.46.90
+  </a>
+</div>
+
+          <h2 class="headline">Élagage à Béthune, travail propre et sécurisé.</h2>
+          <p class="sub">
+            <strong>J-dieux Père et fils</strong> intervient à Béthune et alentours pour l’élagage, la taille,
+            l’abattage, le débroussaillage et l’entretien de jardin. Devis simple, réponse rapide, chantier net.
+          </p>
+
+          <div class="actions">
+            <a class="btn primary" href="#devis">📩 Devis élagage Béthune</a>
+            <a class="btn" href="#galerie">Voir les avant / après</a>
+            <a class="btn" href="#zone">Voir la zone Béthune</a>
+          </div>
+        </div>
+
+        <aside class="card heroRight">
+          <div class="panel">
+            <h3>Ce que les clients aiment</h3>
+            <p>Une approche claire: on explique, on sécurise, on laisse propre.</p>
+            <ul class="ticks">
+              <li><span class="tick">✓</span> Élagage raisonné à Béthune</li>
+              <li><span class="tick">✓</span> Taille de haies et arbustes</li>
+              <li><span class="tick">✓</span> Entretien jardin Béthune</li>
+              <li><span class="tick">✓</span> Devis en ligne </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="wrap">
+        <div class="titleRow">
+          <h2>Services d’élagage à Béthune</h2>
+          <p class="hint">Élagage, taille, entretien de jardin: local et efficace.</p>
+        </div>
+
+        <div class="grid services">
+          <div class="card service">
+            <h3>Élagage</h3>
+            <p>
+              Élagage à Béthune: suppression du bois mort, éclaircie, réduction, sécurisation.
+              Objectif: un arbre plus sain et moins de risques.
+            </p>
+            <span class="chip">Élagage Béthune</span>
+          </div>
+
+          <div class="card service">
+            <h3>Taille & haies</h3>
+            <p>
+              Taille de haies, arbustes, remise en forme. Entretien jardin à Béthune pour un extérieur net,
+              structuré et agréable.
+            </p>
+            <span class="chip">Taille haies Béthune</span>
+          </div>
+
+          <div class="card service">
+            <h3>Abattage & débroussaillage</h3>
+            <p>
+              Abattage contrôlé si nécessaire, débroussaillage et nettoyage. Sécurité, visibilité,
+              et terrain propre.
+            </p>
+            <span class="chip">Sécurisation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAP -->
+    <section id="zone">
+      <div class="wrap">
+        <div class="titleRow">
+          <h2>Zone d’action autour de Béthune</h2>
+          <p class="hint">Carte Google Maps + villes proches.</p>
+        </div>
+
+        <div class="grid mapGrid">
+          <div class="card pad">
+            <div style="position:relative; padding-bottom:56%; height:0; overflow:hidden;">
+  <iframe
+    src="https://www.google.com/maps/d/u/0/embed?mid=13IKfRnpWkf7Lw2LDpaLD2xUgZuBgms4&ehbc=2E312F&noprof=1"
+    style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"
+    loading="lazy"
+    allowfullscreen>
+  </iframe>
+</div>
+            <p class="note">
+            
+            </p>
+          </div>
+
+          <div class="card pad zones">
+            <h3>Rayon d’intervention</h3>
+            <p class="note">
+              J-dieux Père et fils intervient principalement à <strong>Béthune</strong> pour l’élagage et l’entretien de jardin,
+              et se déplace autour de Béthune.
+            </p>
+            <ul>
+              <li>Béthune</li>
+              <li>Beuvry, Annezin, Hinges, Verquigneul</li>
+              <li>Essars, Nœux-les-Mines, Bruay-la-Buissière</li>
+              <li>Et alentours de Béthune selon disponibilité</li>
+            </ul>
+            <div style="margin-top:14px">
+              <a class="btn primary" href="#devis">📩 Demander un devis à Béthune</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="galerie">
+      <div class="wrap">
+        <div class="titleRow">
+          <h2>Galerie avant / après</h2>
+          <p class="hint">Le concret parle.</p>
+        </div>
+
+        <div class="grid gallery">
+          <div class="card pair">
+            <h3>Élagage à Béthune: mise en sécurité</h3>
+            <div class="ba">
+              <div class="ph">
+                <img src="images/avant-1.jpg" alt="Avant élagage Béthune" loading="lazy">
+                <div class="cap"><span class="pillSmall">Avant</span><span>Élagage Béthune</span></div>
+              </div>
+              <div class="ph">
+                <img src="images/apres-1.jpg" alt="Après élagage Béthune" loading="lazy">
+                <div class="cap"><span class="pillSmall">Après</span><span>Chantier propre</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card pair">
+            <h3>Entretien jardin à Béthune: haies & arbustes</h3>
+            <div class="ba">
+              <div class="ph">
+                <img src="images/avant-2.jpg" alt="Avant entretien jardin Béthune" loading="lazy">
+                <div class="cap"><span class="pillSmall">Avant</span><span>Entretien jardin</span></div>
+              </div>
+              <div class="ph">
+                <img src="images/apres-2.jpg" alt="Après entretien jardin Béthune" loading="lazy">
+                <div class="cap"><span class="pillSmall">Après</span><span>Taille haies Béthune</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="note" style="margin-top:12px">
+          Mets 6 à 12 blocs avant/après. Noms de fichiers “propres”: elagage-bethune-1-avant.jpg, etc.
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="devis">
+      <div class="wrap">
+        <div class="titleRow">
+          <h2>Demande de devis élagage à Béthune</h2>
+          <p class="hint">Réponse en 24h</p>
+        </div>
+
+        <div class="grid contactGrid">
+          <div class="card pad">
+            <h3>Infos utiles pour un devis rapide</h3>
+            <p class="note">
+              Pour un <strong>devis élagage à Béthune</strong>, précise: la ville (Béthune), le type de travaux
+              (élagage, taille, abattage, entretien jardin), l’accès.
+            </p>
+            <p class="note">
+              J-dieux Père et fils, service local à <strong>Béthune</strong>, orienté sécurité et finition propre.
+            </p>
+          </div>
+
+          <div class="card pad">
+            <!-- IMPORTANT: remplace par ton endpoint Formspree -->
+            <form action="https://formspree.io/f/XXXXYYYY" method="POST">
+              <div class="row2">
+                <input name="nom" type="text" placeholder="Nom" required>
+                <input name="telephone" type="tel" placeholder="Téléphone" required>
+              </div>
+
+              <div class="row2">
+                <input name="ville" type="text" placeholder="Ville (ex: Béthune)" required>
+                <select name="type_travaux" required>
+                  <option value="" disabled selected>Type de travaux</option>
+                  <option>Élagage</option>
+                  <option>Taille de haies</option>
+                  <option>Abattage</option>
+                  <option>Débroussaillage</option>
+                  <option>Entretien de jardin</option>
+                </select>
+              </div>
+
+              <input name="email" type="email" placeholder="Email (optionnel)">
+              <textarea name="message" placeholder="Décris le chantier (hauteur, accès, urgence, photos, etc.)" required></textarea>
+
+              <!-- Anti-spam simple -->
+              <input type="text" name="_gotcha" style="display:none">
+              <input type="hidden" name="_subject" value="Demande de devis - J-dieux (Béthune)">
+
+              <button class="submit" type="submit">✅ Envoyer la demande de devis</button>
+
+              <p class="note">
+                En envoyant ce formulaire, vous demandez un devis élagage/entretien jardin à Béthune.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SEO -->
+    <section id="faq">
+      <div class="wrap">
+        <div class="titleRow">
+          <h2>FAQ élagage à Béthune</h2>
+          <p class="hint">SEO local: Béthune + élagage + entretien jardin.</p>
+        </div>
+
+        <div class="card faq">
+          <details>
+            <summary>Intervenez-vous à Béthune pour l’élagage ?</summary>
+            <p>
+              Oui, J-dieux Père et fils intervient à <strong>Béthune</strong> pour l’élagage, la taille, l’entretien de jardin,
+              et les travaux de sécurisation. Nous intervenons aussi autour de Béthune selon le chantier.
+            </p>
+          </details>
+
+          <details>
+            <summary>Comment obtenir un devis élagage à Béthune ?</summary>
+            <p>
+              Pour un <strong>devis élagage Béthune</strong>, remplis le formulaire en précisant la ville (Béthune),
+              le type de travaux (élagage, taille haies, abattage, entretien jardin) et ta description. Réponse rapide.
+            </p>
+          </details>
+
+          <details>
+            <summary>Faites-vous l’entretien de jardin à Béthune ?</summary>
+            <p>
+              Oui. L’<strong>entretien jardin à Béthune</strong> inclut la taille de haies, la taille d’arbustes,
+              le débroussaillage et la remise au propre. On adapte selon la saison et l’état du jardin.
+            </p>
+          </details>
+
+          <details>
+            <summary>Quel est le prix d’un élagage à Béthune ?</summary>
+            <p>
+              Le prix d’un <strong>élagage à Béthune</strong> varie selon la hauteur, l’accès, le volume, et la sécurité.
+              Le plus fiable: un devis élagage Béthune via le formulaire (avec photo si possible).
+            </p>
+          </details>
+
+          <details>
+            <summary>Élagage ou abattage, que choisir ?</summary>
+            <p>
+              Souvent, un <strong>élagage à Béthune</strong> suffit (bois mort, réduction, sécurisation). L’abattage est réservé
+              aux cas nécessaires. On conseille la solution la plus cohérente pour la sécurité et la santé de l’arbre.
+            </p>
+          </details>
+
+          <details>
+            <summary>Dans quelles villes autour de Béthune intervenez-vous ?</summary>
+            <p>
+              Nous intervenons à <strong>Béthune</strong> et selon les chantiers autour de Béthune (Beuvry, Annezin,
+              Hinges, Nœux-les-Mines, Bruay-la-Buissière…). Pour confirmer, demande un devis via le formulaire.
+            </p>
+          </details>
+        </div>
+
+        <p class="note" style="margin-top:12px">
+          Pense à ajouter encore 8 à 12 questions similaires (élagage Béthune, taille haies Béthune, entretien jardin Béthune).
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap" style="display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+      <div>
+        <strong>J-dieux</strong> | <span style="opacity:.8">Père et fils</span><br>
+        <span>Élagage • Entretien jardin • Béthune</span>
+      </div>
+      <div>
+        <span>© <span id="year"></span> J-dieux</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const burger = document.querySelector(".burger");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const closeBtn = document.querySelector(".closeMobile");
+    const mobileLinks = document.querySelectorAll(".mobileLinks a");
+
+    function openMenu(){
+      mobileMenu.classList.add("open");
+      burger.classList.add("open");
+      mobileMenu.setAttribute("aria-hidden", "false");
+      burger.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeMenu(){
+      mobileMenu.classList.remove("open");
+      burger.classList.remove("open");
+      mobileMenu.setAttribute("aria-hidden", "true");
+      burger.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    }
+
+    burger.addEventListener("click", () => {
+      const isOpen = mobileMenu.classList.contains("open");
+      if (isOpen) closeMenu();
+      else openMenu();
+    });
+
+    closeBtn.addEventListener("click", closeMenu);
+
+    // fermer si clic en dehors du panneau
+    mobileMenu.addEventListener("click", (e) => {
+      if (e.target === mobileMenu) closeMenu();
+    });
+
+    // fermer quand on clique un lien
+    mobileLinks.forEach(a => a.addEventListener("click", closeMenu));
+
+    // fermer avec Échap
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
+    });
+  </script>
+</body>
+</html>
